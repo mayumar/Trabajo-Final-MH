@@ -2,6 +2,8 @@ package es.uma.informatica.misia.ae.simpleea;
 
 import java.util.Random;
 
+import es.uma.informatica.misia.ae.simpleea.individuals.BinaryString;
+
 public class BitFlipMutation implements Mutation {
 
 	private double bitFlipProb;

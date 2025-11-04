@@ -3,7 +3,8 @@ package es.uma.informatica.misia.ae.simpleea;
 import java.util.HashMap;
 import java.util.Map;
 
-import es.uma.informatica.misia.ae.simpleea.problems.Onemax;
+import es.uma.informatica.misia.ae.simpleea.problems.KnapsackProblem;
+// import es.uma.informatica.misia.ae.simpleea.problems.Onemax;
 
 public class Main {
 
@@ -16,7 +17,7 @@ public class Main {
 		}
 		
 		int n = Integer.parseInt(args[3]);
-		Problem problem = new Onemax(n);
+		Problem problem = new KnapsackProblem("SimpleEvolutionaryAlgorithm-main/data/mknap1.txt");
 		
 		Map<String, Double> parameters = readEAParameters(args);
 		EvolutionaryAlgorithm evolutionaryAlgorithm = new EvolutionaryAlgorithm(parameters, problem);

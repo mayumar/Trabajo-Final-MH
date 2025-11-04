@@ -1,7 +1,9 @@
-package es.uma.informatica.misia.ae.simpleea;
+package es.uma.informatica.misia.ae.simpleea.individuals;
 
 import java.util.Arrays;
 import java.util.Random;
+
+import es.uma.informatica.misia.ae.simpleea.Individual;
 
 public class BinaryString extends Individual {
 	private byte [] chromosome;
