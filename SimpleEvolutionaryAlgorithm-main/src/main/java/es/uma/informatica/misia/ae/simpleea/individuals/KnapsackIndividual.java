@@ -6,6 +6,10 @@ public class KnapsackIndividual extends Individual{
     
     private boolean[] genome;
 
+    public KnapsackIndividual(KnapsackIndividual individual) {
+        this.genome = individual.genome.clone();
+    }
+
     public KnapsackIndividual(int n) {
         this.genome = new boolean[n];
     }

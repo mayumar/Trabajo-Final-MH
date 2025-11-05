@@ -1,7 +1,9 @@
-package es.uma.informatica.misia.ae.simpleea;
+package es.uma.informatica.misia.ae.simpleea.crossover;
 
 import java.util.Random;
 
+import es.uma.informatica.misia.ae.simpleea.Crossover;
+import es.uma.informatica.misia.ae.simpleea.Individual;
 import es.uma.informatica.misia.ae.simpleea.individuals.BinaryString;
 
 public class SinglePointCrossover implements Crossover {

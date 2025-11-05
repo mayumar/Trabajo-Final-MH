@@ -6,6 +6,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import es.uma.informatica.misia.ae.simpleea.crossover.KnapsackSinglePointCrossover;
+import es.uma.informatica.misia.ae.simpleea.crossover.SinglePointCrossover;
+
 public class EvolutionaryAlgorithm {
 	public static final String MAX_FUNCTION_EVALUATIONS_PARAM = "maxFunctionEvaluations";
 	public static final String RANDOM_SEED_PARAM = "randomSeed";
@@ -42,7 +45,7 @@ public class EvolutionaryAlgorithm {
 		selection = new BinaryTournament(rnd);
 		replacement = new ElitistReplacement();
 		mutation = new BitFlipMutation(rnd, bitFlipProb);
-		recombination = new SinglePointCrossover(rnd);
+		recombination = new KnapsackSinglePointCrossover(rnd);
 	}
 	
 	public Individual run() {
@@ -55,6 +58,7 @@ public class EvolutionaryAlgorithm {
 			Individual parent2 = selection.selectParent(population);
 			Individual child = recombination.apply(parent1, parent2);
 			child = mutation.apply(child);
+			System.out.println("hola");
 			evaluateIndividual(child);
 			population = replacement.replacement(population, Arrays.asList(child));
 		}

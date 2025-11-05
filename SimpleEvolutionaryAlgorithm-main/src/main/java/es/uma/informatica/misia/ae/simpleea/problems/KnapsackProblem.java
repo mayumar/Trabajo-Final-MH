@@ -66,18 +66,18 @@ public class KnapsackProblem implements Problem {
                     if (i == n) break;
                 }
             }
-
+            
             // Leer capacidad
             while ((line = br.readLine()) != null && line.trim().isEmpty());
             if (line == null) throw new IOException("Capacidad no encontrada");
             capacity = Integer.parseInt(line.trim().split("\\s+")[0]);
-
+            
         } catch (IOException e){
             System.err.println("Error leyendo instancia: " + e.getMessage());
             System.exit(1);
         }
     }
-
+    
     @Override
     public double evaluate(Individual individual) {
         KnapsackIndividual ind = (KnapsackIndividual) individual;
