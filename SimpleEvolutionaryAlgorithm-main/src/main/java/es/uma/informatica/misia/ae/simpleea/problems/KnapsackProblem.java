@@ -23,6 +23,10 @@ public class KnapsackProblem implements Problem {
         loadProblem(filename);
     }
 
+    public double getOptimal() {
+        return this.optimal;
+    }
+
     private void loadProblem(String filename){
         try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
             
