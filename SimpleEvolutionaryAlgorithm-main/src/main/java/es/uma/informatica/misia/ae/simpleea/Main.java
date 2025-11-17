@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import es.uma.informatica.misia.ae.simpleea.problems.KnapsackProblem;
-// import es.uma.informatica.misia.ae.simpleea.problems.Onemax;
 
 public class Main {
 

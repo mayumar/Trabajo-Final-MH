@@ -2,9 +2,9 @@ package es.uma.informatica.misia.ae.simpleea.problems;
 
 import java.util.Random;
 
+import es.uma.informatica.misia.ae.simpleea.BinaryString;
 import es.uma.informatica.misia.ae.simpleea.Individual;
 import es.uma.informatica.misia.ae.simpleea.Problem;
-import es.uma.informatica.misia.ae.simpleea.individuals.BinaryString;
 
 public class Onemax implements Problem{
 	private int n;
