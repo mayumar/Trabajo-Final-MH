@@ -71,11 +71,9 @@ public class EvolutionaryAlgorithm {
 		}
 		while (functionEvaluations < maxFunctionEvaluations) {
 			// Si estamos en modo 1, tenemos optimo conocido y ya lo hemos alcanzado, paramos
-			if (stopMode == 1) {
-				if (optimal > 0 && bestSolution != null && bestSolution.getFitness() >= optimal) {
-					foundOptimal = true;
-					break;
-				}
+			if (optimal > 0 && bestSolution != null && bestSolution.getFitness() >= optimal) {
+				foundOptimal = true;
+				if (stopMode == 1) break;
 			}
 
 			// Algoritmo evolutivo estandar
