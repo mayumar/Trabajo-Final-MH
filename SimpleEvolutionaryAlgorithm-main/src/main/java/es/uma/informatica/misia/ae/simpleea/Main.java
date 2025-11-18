@@ -10,7 +10,7 @@ public class Main {
 	
 	public static void main (String args []) {
 		
-		if (args.length < 7) {
+		if (args.length < 6) {
 			System.err.println("Usage: <population size> <function evaluations> <singlepoint probability> <bitflip probability> <stopMode> <random seed>");
             System.err.println("mode: 0 = max evaluations, 1 = stop at optimal");
             return;
@@ -18,7 +18,7 @@ public class Main {
 		
 		Map<String, Double> parameters = readEAParameters(args);
 		
-		Problem problem = new KnapsackProblem("SimpleEvolutionaryAlgorithm-main/data/mknap1.txt"); // "SimpleEvolutionaryAlgorithm-main/data/mknap1.txt"
+		Problem problem = new KnapsackProblem("data/mknap1.txt"); // "SimpleEvolutionaryAlgorithm-main/data/mknap1.txt"
 		EvolutionaryAlgorithm evolutionaryAlgorithm = new EvolutionaryAlgorithm(parameters, problem);
 		
 		long t0 = System.currentTimeMillis();
@@ -27,18 +27,18 @@ public class Main {
 		
 		// CSV line:
         // seed,mode,popsize,maxEvals,bitflip,crossover,bestFitness,foundOptimal,evaluations,elapsedMillis
-        System.out.printf("%d,%s,%d,%d,%.6f,%.6f,%.6f,%b,%d,%d\n",
-            parameters.get(EvolutionaryAlgorithm.RANDOM_SEED_PARAM),
-			parameters.get(EvolutionaryAlgorithm.STOP_MODE_PARAM),
-            parameters.get(EvolutionaryAlgorithm.POPULATION_SIZE_PARAM).intValue(),
-            parameters.get(EvolutionaryAlgorithm.MAX_FUNCTION_EVALUATIONS_PARAM).intValue(),
-            parameters.get(BitFlipMutation.BIT_FLIP_PROBABILITY_PARAM),
-            parameters.get(SinglePointCrossover.SINGLE_POINT_PROBABILITY_PARAM),
-            bestSolution.getFitness(),
-            evolutionaryAlgorithm.hasFoundOptimal(),
-            evolutionaryAlgorithm.getFunctionEvaluations(),
-            evolutionaryAlgorithm.getElapsedTimeMillis()
-        );
+        System.out.printf("%d,%d,%d,%d,%.6f,%.6f,%.6f,%b,%d,%d\n",
+			parameters.get(EvolutionaryAlgorithm.RANDOM_SEED_PARAM).intValue(),
+			parameters.get(EvolutionaryAlgorithm.STOP_MODE_PARAM).intValue(),
+			parameters.get(EvolutionaryAlgorithm.POPULATION_SIZE_PARAM).intValue(),
+			parameters.get(EvolutionaryAlgorithm.MAX_FUNCTION_EVALUATIONS_PARAM).intValue(),
+			parameters.get(SinglePointCrossover.SINGLE_POINT_PROBABILITY_PARAM),
+			parameters.get(BitFlipMutation.BIT_FLIP_PROBABILITY_PARAM),
+			bestSolution.getFitness(),
+			evolutionaryAlgorithm.hasFoundOptimal(),
+			evolutionaryAlgorithm.getFunctionEvaluations(),
+			evolutionaryAlgorithm.getElapsedTimeMillis()
+		);
 	}
 
 	private static Map<String, Double> readEAParameters(String[] args) {
