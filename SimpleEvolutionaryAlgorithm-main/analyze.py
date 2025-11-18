@@ -12,7 +12,7 @@ agg = df.groupby(group_cols).agg(
     mean_fitness = ('bestFitness', 'mean'),
     std_fitness = ('bestFitness', 'std'),
     median_fitness = ('bestFitness', 'median'),
-    sucess_rate = ('foundOptimar', lambda x: 100.0 * x.sum()/len(x)),
+    sucess_rate = ('foundOptimal', lambda x: 100.0 * x.sum()/len(x)),
     mean_evals = ('evaluations', 'mean'),
     std_evals = ('evaluations', 'std'),
     n = ('seed', 'count')
@@ -27,7 +27,7 @@ with open("results/summary_by_combo.tex", "w") as f:
 for mode in df['mode'].unique():
     subset = df[df['mode']==mode]
     # pivot por combo (crossover,bitflip) para hacer boxplots
-    subset['combo'] = subset['crossover'].astype(str) + "_c" + subset['bitflip'].astype(str)
+    subset['combo'] = subset['crossover'].astype(str) + "_c" + subset['mutation'].astype(str)
     plt.figure(figsize=(12,6))
     subset.boxplot(column='bestFitness', by='combo', rot=90)
     plt.title(f'Best fitness boxplots - mode {mode}')

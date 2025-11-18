@@ -1,6 +1,7 @@
 package es.uma.informatica.misia.ae.simpleea;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import es.uma.informatica.misia.ae.simpleea.problems.KnapsackProblem;
@@ -26,8 +27,9 @@ public class Main {
 		long t1 = System.currentTimeMillis();
 		
 		// CSV line:
-        // seed,mode,popsize,maxEvals,bitflip,crossover,bestFitness,foundOptimal,evaluations,elapsedMillis
-        System.out.printf("%d,%d,%d,%d,%.6f,%.6f,%.6f,%b,%d,%d\n",
+        // seed,mode,popsize,maxEvals,crossover,mutation,bestFitness,foundOptimal,evaluations,elapsedMillis
+        System.out.printf(Locale.US,
+			"%d,%d,%d,%d,%.6f,%.6f,%.6f,%b,%d,%d\n",
 			parameters.get(EvolutionaryAlgorithm.RANDOM_SEED_PARAM).intValue(),
 			parameters.get(EvolutionaryAlgorithm.STOP_MODE_PARAM).intValue(),
 			parameters.get(EvolutionaryAlgorithm.POPULATION_SIZE_PARAM).intValue(),
