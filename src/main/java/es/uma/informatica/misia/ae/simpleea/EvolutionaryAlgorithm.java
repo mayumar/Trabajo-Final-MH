@@ -69,7 +69,7 @@ public class EvolutionaryAlgorithm {
 		if (problem instanceof KnapsackProblem) {
 			optimal = ((KnapsackProblem) problem).getOptimal();
 		}
-		while (functionEvaluations < maxFunctionEvaluations) {
+		while ((stopMode == 0 && functionEvaluations < maxFunctionEvaluations) || (stopMode == 1 && foundOptimal == false)) {
 			// Si estamos en modo 1, tenemos optimo conocido y ya lo hemos alcanzado, paramos
 			if (optimal > 0 && bestSolution != null && bestSolution.getFitness() >= optimal) {
 				foundOptimal = true;

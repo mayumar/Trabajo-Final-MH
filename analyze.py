@@ -5,24 +5,35 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-infile = Path(sys.argv[1]) if len(sys.argv)>1 else Path("results/all_results.csv")
+infile = Path(sys.argv[1]) if len(sys.argv)>1 else Path("results/all_results_largo.csv")
 df = pd.read_csv(infile)
 
 df0 = df[df["mode"] == 0] # Numero maximo de evaluaciones
 df1 = df[df["mode"] == 1]
 
-tabla0 = df0.groupby(["crossover", "mutation"]).agg({
+tabla0_c = df0.groupby(["crossover"]).agg({
     "bestFitness": ["mean", "std"],
     "foundOptimal": "mean",
     "elapsedMillis": ["mean", "std"]
 })
 
-print(tabla0)
+tabla0_m = df0.groupby(["mutation"]).agg({
+    "bestFitness": ["mean", "std"],
+    "foundOptimal": "mean",
+    "elapsedMillis": ["mean", "std"]
+})
+
+print(tabla0_c)
+print(tabla0_m)
 
 # Guardar tabla a CSV y LaTeX
-tabla0.to_csv("results/summary_0.csv")
-with open("results/summary_0.tex", "w") as f:
-    f.write(tabla0.to_latex(float_format="%.3f"))
+tabla0_c.to_csv("results/summary_0_c.csv")
+with open("results/summary_0_c.tex", "w") as f:
+    f.write(tabla0_c.to_latex(float_format="%.3f"))
+
+tabla0_m.to_csv("results/summary_0_m.csv")
+with open("results/summary_0_m.tex", "w") as f:
+    f.write(tabla0_m.to_latex(float_format="%.3f"))
 
 # fitness medio por probabilidad de cruce
 plt.figure()
@@ -58,42 +69,49 @@ plt.close()
 
 
 
-tabla1 = df1.groupby(["crossover","mutation"]).agg({
-    "foundOptimal": "mean",
+tabla1_c = df1.groupby(["crossover"]).agg({
     "evaluations": ["mean", "std"],
     "elapsedMillis": ["mean", "std"]
 })
 
-print(tabla1)
+tabla1_m = df1.groupby(["mutation"]).agg({
+    "evaluations": ["mean", "std"],
+    "elapsedMillis": ["mean", "std"]
+})
+
+print(tabla1_c)
+print(tabla1_m)
 
 # Guardar tabla a CSV y LaTeX
-tabla1.to_csv("results/summary_1.csv")
-with open("results/summary_1.tex", "w") as f:
-    f.write(tabla1.to_latex(float_format="%.3f"))
+tabla1_c.to_csv("results/summary_1_c.csv")
+with open("results/summary_1_c.tex", "w") as f:
+    f.write(tabla1_c.to_latex(float_format="%.3f"))
 
-# Porcentaje de éxito según cruce
+# Guardar tabla a CSV y LaTeX
+tabla1_m.to_csv("results/summary_1_m.csv")
+with open("results/summary_1_m.tex", "w") as f:
+    f.write(tabla1_m.to_latex(float_format="%.3f"))
+
+# # Porcentaje de éxito según cruce
+# plt.figure()
+# df1.groupby("crossover")["foundOptimal"].mean().plot(kind="bar")
+# plt.title("Porcentaje de éxito según crossover (modo 1)")
+# plt.ylabel("Proporción de runs óptimos")
+# plt.xlabel("Probabilidad de crossover")
+# plt.savefig("results/plot_foundOptimal_crossover_1.png")
+# plt.close()
+
+# # Porcentaje de éxito según mutacion
+# plt.figure()
+# df1.groupby("mutation")["foundOptimal"].mean().plot(kind="bar")
+# plt.title("Porcentaje de éxito según mutation (modo 1)")
+# plt.ylabel("Proporción de runs óptimos")
+# plt.xlabel("Probabilidad de mutation")
+# plt.savefig("results/plot_foundOptimal_mutation_1.png")
+# plt.close()
+
 plt.figure()
-df1.groupby("crossover")["foundOptimal"].mean().plot(kind="bar")
-plt.title("Porcentaje de éxito según crossover (modo 1)")
-plt.ylabel("Proporción de runs óptimos")
-plt.xlabel("Probabilidad de crossover")
-plt.savefig("results/plot_foundOptimal_crossover_1.png")
-plt.close()
-
-# Porcentaje de éxito según mutacion
-plt.figure()
-df1.groupby("mutation")["foundOptimal"].mean().plot(kind="bar")
-plt.title("Porcentaje de éxito según mutation (modo 1)")
-plt.ylabel("Proporción de runs óptimos")
-plt.xlabel("Probabilidad de mutation")
-plt.savefig("results/plot_foundOptimal_mutation_1.png")
-plt.close()
-
-# Evaluaciones necesarias para encontrar el óptimo, solo para ejecuciones exitosas
-df_ok = df1[df1["foundOptimal"] == True]
-
-plt.figure()
-df_ok.groupby("crossover")["evaluations"].mean().plot(marker="o")
+df1.groupby("crossover")["evaluations"].mean().plot(marker="o")
 plt.title("Evaluaciones medias para lograr el óptimo (modo 1)")
 plt.ylabel("Evaluaciones")
 plt.xlabel("Probabilidad de crossover")
@@ -102,7 +120,7 @@ plt.close()
 
 # Evaluaciones necesarias para encontrar el óptimo, solo para ejecuciones exitosas
 plt.figure()
-df_ok.groupby("mutation")["evaluations"].mean().plot(marker="o")
+df1.groupby("mutation")["evaluations"].mean().plot(marker="o")
 plt.title("Evaluaciones medias para lograr el óptimo (modo 1)")
 plt.ylabel("Evaluaciones")
 plt.xlabel("Probabilidad de mutation")
@@ -111,11 +129,29 @@ plt.close()
 
 # Boxplot del número de evaluaciones
 plt.figure()
-sns.boxplot(data=df_ok, x="mutation", y="evaluations")
+sns.boxplot(data=df1, x="mutation", y="evaluations")
 plt.title("Distribución de evaluaciones según mutation (solo éxitos, modo 1)")
 plt.ylabel("Evaluaciones")
 plt.xlabel("Probabilidad de mutación")
 plt.savefig("results/boxplot_evaluations_mutation_1.png")
+plt.close()
+
+# Boxplot del número de evaluaciones
+plt.figure()
+sns.boxplot(data=df1, x="crossover", y="evaluations")
+plt.title("Distribución de evaluaciones según crossover (solo éxitos, modo 1)")
+plt.ylabel("Evaluaciones")
+plt.xlabel("Probabilidad de mutación")
+plt.savefig("results/boxplot_evaluations_crossover_1.png")
+plt.close()
+
+# Evaluaciones
+plt.figure()
+df_evals = df1.groupby(["crossover", "mutation"])["evaluations"].mean().unstack()
+print(df_evals)
+sns.heatmap(df_evals, fmt=".0f", annot=True)
+plt.title("Número medio de evaluaciones (modo 1)")
+plt.savefig("results/heatmap_evaluations_1.png")
 plt.close()
 
 
