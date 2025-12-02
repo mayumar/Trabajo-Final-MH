@@ -19,12 +19,10 @@ public class Main {
 		
 		Map<String, Double> parameters = readEAParameters(args);
 		
-		Problem problem = new KnapsackProblem("data/mknap1.txt"); // "SimpleEvolutionaryAlgorithm-main/data/mknap1.txt"
+		Problem problem = new KnapsackProblem("data/mknap1.txt");
 		EvolutionaryAlgorithm evolutionaryAlgorithm = new EvolutionaryAlgorithm(parameters, problem);
 		
-		long t0 = System.currentTimeMillis();
 		Individual bestSolution = evolutionaryAlgorithm.run();
-		long t1 = System.currentTimeMillis();
 		
 		// CSV line:
         // seed,mode,popsize,maxEvals,crossover,mutation,bestFitness,foundOptimal,evaluations,elapsedMillis
