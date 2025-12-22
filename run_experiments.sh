@@ -12,9 +12,6 @@ MAXEVALS=2000
 CROSSOVER=($(LC_NUMERIC=C seq 0.1 0.1 1.0))
 MUTATION=($(LC_NUMERIC=C seq 0.01 0.01 0.1))
 
-# CROSSOVER=(0.6 0.7 0.8 0.9)
-# MUTATION=(0.01 0.02 0.05 0.1)
-
 # seeds: 30 semillas distintas
 SEEDS=($(seq 1000 1029))
 
