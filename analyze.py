@@ -5,7 +5,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-infile = Path(sys.argv[1]) if len(sys.argv)>1 else Path("results/all_results_largo.csv")
+infile = Path(sys.argv[1]) if len(sys.argv)>1 else Path("results/all_results.csv")
 df = pd.read_csv(infile)
 
 df0 = df[df["mode"] == 0] # Numero maximo de evaluaciones
@@ -53,13 +53,6 @@ plt.ylabel("Mejor Fitness")
 plt.savefig("results/plot_bestFitness_mutation_0.png")
 plt.close()
 
-# # Boxplots por configuración (crossover)
-# plt.figure()
-# sns.boxplot(data=df0, x="crossover", y="bestFitness")
-# plt.title("Distribución de Fitness por prob. cruce")
-# plt.savefig("results/boxplot_bestFitness_crossover_0.png")
-# plt.close()
-
 # Porcentaje de optimal alcanzado
 plt.figure()
 df_opt = df0.groupby(["crossover", "mutation"])["foundOptimal"].mean().unstack()
@@ -69,9 +62,6 @@ plt.xlabel("Probabilidad de mutación")
 plt.ylabel("Probabilidad de cruce")
 plt.savefig("results/plot_foundOptimal_0.png")
 plt.close()
-
-
-
 
 tabla1_c = df1.groupby(["crossover"]).agg({
     "evaluations": ["mean", "std"],
@@ -95,24 +85,6 @@ with open("results/summary_1_c.tex", "w") as f:
 tabla1_m.to_csv("results/summary_1_m.csv")
 with open("results/summary_1_m.tex", "w") as f:
     f.write(tabla1_m.to_latex(float_format="%.3f"))
-
-# # Porcentaje de éxito según cruce
-# plt.figure()
-# df1.groupby("crossover")["foundOptimal"].mean().plot(kind="bar")
-# plt.title("Porcentaje de éxito según crossover")
-# plt.ylabel("Proporción de runs óptimos")
-# plt.xlabel("Probabilidad de crossover")
-# plt.savefig("results/plot_foundOptimal_crossover_1.png")
-# plt.close()
-
-# # Porcentaje de éxito según mutacion
-# plt.figure()
-# df1.groupby("mutation")["foundOptimal"].mean().plot(kind="bar")
-# plt.title("Porcentaje de éxito según mutation")
-# plt.ylabel("Proporción de runs óptimos")
-# plt.xlabel("Probabilidad de mutation")
-# plt.savefig("results/plot_foundOptimal_mutation_1.png")
-# plt.close()
 
 plt.figure()
 df1.groupby("crossover")["evaluations"].mean().plot(marker="o")
@@ -159,37 +131,3 @@ plt.xlabel("Probabilidad de mutación")
 plt.ylabel("Probabilidad de cruce")
 plt.savefig("results/heatmap_evaluations_1.png")
 plt.close()
-
-
-
-# group_cols = ['mode', 'crossover', 'mutation']
-# agg = df.groupby(group_cols).agg(
-#     mean_fitness = ('bestFitness', 'mean'),
-#     std_fitness = ('bestFitness', 'std'),
-#     median_fitness = ('bestFitness', 'median'),
-#     sucess_rate = ('foundOptimal', lambda x: 100.0 * x.sum()/len(x)),
-#     mean_evals = ('evaluations', 'mean'),
-#     std_evals = ('evaluations', 'std'),
-#     n = ('seed', 'count')
-# ).reset_index()
-
-# # Guardar tabla a CSV y LaTeX
-# agg.to_csv("results/summary_by_combo.csv", index=False)
-# with open("results/summary_by_combo.tex", "w") as f:
-#     f.write(agg.to_latex(index=False, float_format="%.3f"))
-
-# # Ejemplo de boxplot para un mode concreto
-# for mode in df['mode'].unique():
-#     subset = df[df['mode']==mode]
-#     # pivot por combo (crossover,bitflip) para hacer boxplots
-#     subset['combo'] = subset['crossover'].astype(str) + "_c" + subset['mutation'].astype(str)
-#     plt.figure(figsize=(12,6))
-#     subset.boxplot(column='bestFitness', by='combo', rot=90)
-#     plt.title(f'Best fitness boxplots - mode {mode}')
-#     plt.suptitle('')
-#     plt.ylabel('Best fitness')
-#     plt.tight_layout()
-#     plt.savefig(f"results/boxplot_bestFitness_{mode}.png")
-#     plt.close()
-
-# print("Summary and plots saved into results/")
